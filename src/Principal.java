@@ -1,6 +1,8 @@
-import model.entities.Rental;
+import model.entities.CarRental;
+import model.services.RentalService;
+import model.entities.Vehicle;
+import model.services.BrazilianTax;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -31,11 +33,16 @@ public class Principal {
             double valueHour = sc.nextDouble();
                 sc.nextLine();
 
-        Rental rent = new Rental(carName, inicialHour, finalHour, valueDay, valueHour);
+        
 
-        System.out.println(rent);
+        CarRental cr = new CarRental(inicialHour, finalHour, new Vehicle(carName));
+        
+        RentalService rentalService = new RentalService(valueDay, valueHour, new BrazilianTax());
+        
+        rentalService.processInvoice(cr);
 
 
+        System.out.println(cr);
 
 
 
