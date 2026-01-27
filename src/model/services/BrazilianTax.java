@@ -1,6 +1,6 @@
 package model.services;
 
-public class BrazilianTax {
+public class BrazilianTax implements TaxService {
 
     public double tax( double value) {
 
@@ -13,6 +13,4 @@ public class BrazilianTax {
         }
 
     }
-
-
 }

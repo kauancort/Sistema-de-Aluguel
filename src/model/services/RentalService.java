@@ -11,27 +11,22 @@ public class RentalService {
     private double pricePerHour;
     private double pricePerDay;
 
-    BrazilianTax brTax;
-    private double totalHour;
+     private TaxService taxService;
 
 
-    public RentalService(double pricePerDay, double pricePerHour, BrazilianTax brTax) {
+
+    public RentalService(double pricePerDay, double pricePerHour, TaxService taxService) {
 
         this.pricePerDay = pricePerDay;
         this.pricePerHour = pricePerHour;
-        this.brTax = brTax;
+        this.taxService = taxService;
 
-    }
-
-
-    public double getTotalHour() {
-        return Math.ceil(totalHour);
     }
 
     public void processInvoice(CarRental cr) {
 
         double value;
-         totalHour = ((double) ChronoUnit.MINUTES.between(cr.getInicialTime(), cr.getFinalTime()) / 60);
+        double totalHour = ((double) ChronoUnit.MINUTES.between(cr.getInicialTime(), cr.getFinalTime()) / 60);
 
         if (totalHour <= 12) {
             value =  Math.ceil(totalHour) * pricePerHour;
@@ -43,7 +38,7 @@ public class RentalService {
         }
 
 
-       cr.setInvoice(new Invoice(value, brTax.tax(value)));
+       cr.setInvoice(new Invoice(value, taxService.tax(value)));
 
     }
 }
